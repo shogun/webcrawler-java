@@ -36,6 +36,7 @@ Main tradeoffs:
 ## Usage
 
 Run:
+
     $ java -jar target/web-crawler-1.0-SNAPSHOT.jar
 
 Mandatory parameter:
@@ -65,10 +66,10 @@ Example:
         <url>http://wiprodigital.com/</url>
         ...
     </pageLinks>
-    <madiaLinks> 
+    <mediaLinks> 
         <url>http://17776-presscdn-0-6.pagely.netdna-cdn.com/wp-content/themes/wiprodigital/images/designit_logo.png</url>
         ...
-    </madiaLinks>
+    </mediaLinks>
     <externalLinks>
         <url>https://xebialabs.com/</url>
         ...
