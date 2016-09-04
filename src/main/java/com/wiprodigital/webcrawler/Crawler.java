@@ -6,9 +6,6 @@ import edu.uci.ics.crawler4j.fetcher.PageFetcher;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtConfig;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
 
-/**
- * Created by shogun on 04.09.16.
- */
 public class Crawler {
 
     private Integer maxPages = 500;

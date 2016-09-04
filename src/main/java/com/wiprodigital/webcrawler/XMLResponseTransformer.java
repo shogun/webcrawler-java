@@ -6,6 +6,7 @@ import org.w3c.dom.Element;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import java.util.NavigableSet;
 
 public class XMLResponseTransformer {
 
@@ -18,32 +19,34 @@ public class XMLResponseTransformer {
         Document doc = docBuilder.newDocument();
         Element root = doc.createElement("response");
 
-        Element el;
+        root.appendChild(
+                buildXmlUrlList(doc, response.pageLinks, "pageLinks")
+        );
 
-        el = doc.createElement("pageLinks");
-        for (String link : response.pageLinks) {
-            el.appendChild(buildSitemapXmlItem(doc, link));
-        }
-        root.appendChild(el);
+        root.appendChild(
+                buildXmlUrlList(doc, response.mediaLinks, "mediaLinks")
+        );
 
-        el = doc.createElement("madiaLinks");
-        for (String link : response.madiaLinks) {
-            el.appendChild(buildSitemapXmlItem(doc, link));
-        }
-        root.appendChild(el);
-
-        el = doc.createElement("externalLinks");
-        for (String link : response.externalLinks) {
-            el.appendChild(buildSitemapXmlItem(doc, link));
-        }
-        root.appendChild(el);
+        root.appendChild(
+                buildXmlUrlList(doc, response.externalLinks, "externalLinks")
+        );
 
 
         doc.appendChild(root);
         return doc;
     }
 
-    private Element buildSitemapXmlItem(Document doc, String link) {
+    private Element buildXmlUrlList(Document doc, NavigableSet<String> list, String name) {
+
+        Element el = doc.createElement(name);
+        for (String link : list) {
+            el.appendChild(buildUrlXmlItem(doc, link));
+        }
+
+        return el;
+    }
+
+    private Element buildUrlXmlItem(Document doc, String link) {
         Element url = doc.createElement("url");
         url.setTextContent(link);
         return url;

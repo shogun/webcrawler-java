@@ -22,9 +22,15 @@ public class Spider extends WebCrawler {
 
     private final static Pattern FILTERS = Pattern.compile(".*(\\.(css|js|gif|jpg|png|mp3|zip|gz|xml))$");
 
+    private final static String LINK_SELECTOR = "body a[href]";
+
+    private final static String IMAGE_SELECTOR = "body img";
+
     private static Response response;
 
     private static String domain;
+
+    private static String host;
 
     @Override
     public boolean shouldVisit(Page referringPage, WebURL url) {
@@ -51,8 +57,9 @@ public class Spider extends WebCrawler {
         doc.setBaseUri(url);
 
         String link;
+        Elements elements;
 
-        Elements elements = doc.select("body a[href]");
+        elements = doc.select(LINK_SELECTOR);
         for (Element element : elements) {
             link = normalizeUrl(element.attr("href"), domain);
             if (isExternalLink(link) && link.length() > 0) {
@@ -60,7 +67,7 @@ public class Spider extends WebCrawler {
             }
         }
 
-        elements = doc.select("body img");
+        elements = doc.select(IMAGE_SELECTOR);
         for (Element element : elements) {
             link = normalizeUrl(element.attr("src"), domain);
             if (link.length() > 0) {
@@ -114,7 +121,7 @@ public class Spider extends WebCrawler {
 
         try {
             uri = new URI(link);
-            if(Objects.equals(uri.getHost(), new URI(Spider.domain).getHost())) {
+            if(Objects.equals(uri.getHost(), Spider.host)) {
                 return false;
             }
             return true;
@@ -124,9 +131,11 @@ public class Spider extends WebCrawler {
         return false;
     }
 
-    public static void configure(Response response, String url) {
+    public static void configure(Response response, String url) throws URISyntaxException {
 
         Spider.response = response;
+
         Spider.domain = url;
+        Spider.host = new URI(Spider.domain).getHost();
     }
 }

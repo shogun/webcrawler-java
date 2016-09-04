@@ -1,11 +1,9 @@
 package com.wiprodigital.webcrawler;
 
-
 import org.apache.commons.cli.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
-
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
@@ -45,7 +43,6 @@ public class Application {
         if (cmd.getOptionValue("temp-dir") != null) {
             tempDir = cmd.getOptionValue("temp-dir");
         }
-
     }
 
     public void run() {
@@ -103,7 +100,7 @@ public class Application {
                         .longOpt("url")
                         .required(true)
                         .hasArg(true)
-                        .desc("website url")
+                        .desc("website to crawl (http://example.com)")
                         .build()
         );
 
@@ -111,7 +108,7 @@ public class Application {
                 Option.builder("o")
                         .longOpt("output-file")
                         .hasArg(true)
-                        .desc("output file by default sitemap.xml")
+                        .desc("output file - by default: sitemap.xml")
                         .build()
         );
 
@@ -119,7 +116,7 @@ public class Application {
                 Option.builder("c")
                         .longOpt("crawlers")
                         .hasArg(true)
-                        .desc("number of crawlers")
+                        .desc("number of crawlers - by default: 1")
                         .build()
         );
 
@@ -127,7 +124,7 @@ public class Application {
                 Option.builder("m")
                         .longOpt("max-pages")
                         .hasArg(true)
-                        .desc("max pages to fetch")
+                        .desc("max pages to fetch - by default: 500")
                         .build()
         );
 
@@ -135,14 +132,14 @@ public class Application {
                 Option.builder("t")
                         .longOpt("temp-dir")
                         .hasArg(true)
-                        .desc("temporary directory")
+                        .desc("temporary directory - by default: tmp/")
                         .build()
         );
         options.addOption(
                 Option.builder("d")
                         .longOpt("delay")
                         .hasArg(true)
-                        .desc("delay in ms")
+                        .desc("delay in ms - by default: 200ms")
                         .build()
         );
 
